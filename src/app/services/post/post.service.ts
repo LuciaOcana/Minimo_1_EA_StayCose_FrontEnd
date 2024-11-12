@@ -1,8 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+// post.service.ts
+
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Post } from '../../models/post.model';
+import { Rating } from '../../models/rating.model'; // Asegúrate de que este modelo exista
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +13,7 @@ import { Post } from '../../models/post.model';
 export class PostService {
   private apiUrl = `${environment.apiUrl}/posts`;
   private userApiUrl = `${environment.apiUrl}/user`; // URL para los endpoints de usuario
+  private ratingApiUrl = `${environment.apiUrl}/ratings`; // URL para las valoraciones
 
   constructor(private http: HttpClient) { }
 
@@ -45,6 +49,12 @@ export class PostService {
 
   // Verificar si el nombre de usuario existe
   checkUsername(username: string): Observable<{ exists: boolean }> {
-        return this.http.get<{ exists: boolean }>(`${this.userApiUrl}/check-username/${username}`);
+    return this.http.get<{ exists: boolean }>(`${this.userApiUrl}/check-username/${username}`);
+  }
+
+  // Método para crear o actualizar una valoración (like o dislike)
+  createOrUpdateRating(postID: string, user: string, value: number): Observable<any> {
+    const ratingData: Rating = { postID, user, value, timestamp: new Date()  };
+    return this.http.post(`${this.ratingApiUrl}`, ratingData);  // Ruta de la API de valoraciones
   }
 }

@@ -6,5 +6,7 @@ export interface Post {
     postType: string,
     content: string,
     image: string,
-    postDate: Date
+    postDate: Date,
+    likes: number,
+    dislikes: number
 }

@@ -1,0 +1,24 @@
+<div class="rating-container">
+    <h2>Valoraciones</h2>
+    
+    <!-- Formulario para agregar una nueva valoración -->
+    <div>
+      <label for="postId">ID del Post:</label>
+      <input [(ngModel)]="postId" id="postId" type="text" placeholder="ID del post" />
+    </div>
+    <div>
+      <label for="userRating">Valoración:</label>
+      <select [(ngModel)]="userRating" id="userRating">
+        <option value="1">Me gusta</option>
+        <option value="-1">No me gusta</option>
+      </select>
+    </div>
+    <button (click)="submitRating()">Crear valoración</button>
+    
+    <!-- Mostrar las valoraciones -->
+    <div *ngFor="let rating of ratings">
+      <p>{{ rating.user }} valoro el post {{ rating.postID }}: {{ rating.value === 1 ? 'Me gusta' : 'No me gusta' }}</p>
+      <button (click)="deleteRating(rating._id)">Eliminar valoración</button>
+    </div>
+  </div>
+  
